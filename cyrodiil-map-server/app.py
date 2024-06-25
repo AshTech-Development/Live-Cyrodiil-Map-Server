@@ -2,31 +2,36 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Sample data for Cyrodiil map
-CYRODIIL_DATA = {
-    "Campaign 1": {
-        "mapData": {
-            "playerLocation": {"x": 12345, "y": 67890},
-            "objectives": [
-                {"x": 11111, "y": 22222, "name": "Objective 1", "description": "Capture this objective"},
-                {"x": 33333, "y": 44444, "name": "Objective 2", "description": "Defend this objective"}
-            ]
-        },
-        "campaignScores": [
-            {"alliance": 1, "score": 1000},
-            {"alliance": 2, "score": 2000},
-            {"alliance": 3, "score": 1500}
-        ],
-        "emperorship": {
-            "name": "Emperor Xyron",
-            "alliance": 2,
-            "remainingTime": "2 hours"
-        }
-    },
-    "Campaign 2": {
-        # ... add data for Campaign 2 here
-    }
+# Alliance IDs and names
+ALLIANCES = {
+    1: 'Ebonheart Pact',
+    2: 'Aldmeri Dominion',
+    3: 'Daggerfall Covenant'
 }
+
+CAMPAIGNS =
+{
+    [95] = "CP Imerial City",
+    [96] = "Non-CP Imerial City",
+    [101] = "Blackreach",
+    [102] = "Gray Host",
+    [103] = "Ravenwatch",
+    [104] = "Icereach",
+}
+
+# Dictionary to store the data received from the addon
+CYRODIIL_DATA = {}
+
+@app.route('/api/receive-map-data', methods=['POST'])
+def receive_map_data():
+    data = request.get_json()
+    campaign_id = data.get('campaignId')
+    if campaign_id in CAMPAIGNS:
+        campaign_name = CAMPAIGNS[campaign_id]
+        CYRODIIL_DATA[campaign_name] = data
+        return jsonify({'message': 'Data received successfully'}), 200
+    else:
+        return jsonify({'error': 'Invalid campaign ID'}), 400
 
 @app.route('/api/get-map-data', methods=['GET'])
 def get_map_data():
