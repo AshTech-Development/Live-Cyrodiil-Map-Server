@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
@@ -9,14 +9,14 @@ ALLIANCES = {
     3: 'Daggerfall Covenant'
 }
 
-CAMPAIGNS =
-{
-    [95] = "CP Imerial City",
-    [96] = "Non-CP Imerial City",
-    [101] = "Blackreach",
-    [102] = "Gray Host",
-    [103] = "Ravenwatch",
-    [104] = "Icereach",
+# Campaign IDs and names
+CAMPAIGNS = {
+    95: "CP Imerial City",
+    96: "Non-CP Imerial City",
+    101: "Blackreach",
+    102: "Gray Host",
+    103: "Ravenwatch",
+    104: "Icereach"
 }
 
 # Dictionary to store the data received from the addon
